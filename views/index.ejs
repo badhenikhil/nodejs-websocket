@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>
+    <%= title %>
+  </title>
+  <link rel='stylesheet' href='/stylesheets/style.css' />
+
+</head>
+
+<body>
+  <h1>
+    <%= title %>
+  </h1>
+  <p>Welcome to <%= title %>
+  </p>
+
+  Name : <input id="myname" type="text" />
+  <button onclick="sendMessage()">send message</button>
+  <script type="text/javascript">
+    const socket = new WebSocket("ws://localhost:3000");
+
+    socket.onopen = ((event) => {
+      console.log("connected to server");
+    });
+
+    socket.onmessage = ((event) => {
+      console.log(`message from server :${event.data}`);
+    });
+
+    const sendMessage = (msg) => {
+      const name = document.getElementById("myname").value;
+      socket.send(`hello from ${name}`);
+    };
+
+  </script>
+</body>
+
+</html>
